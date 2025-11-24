@@ -1904,15 +1904,15 @@
         // Function to update the UI to show active theme
         function updateActiveThemeUI() {
             const currentTheme = localStorage.getItem('theme') || 'default';
-            const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim();
             
             document.querySelectorAll('.theme-btn').forEach(btn => {
+                // Clear any inline border styles from previous versions
+                btn.style.borderColor = '';
+                
                 if (btn.dataset.themeId === currentTheme) {
                     btn.classList.add('active');
-                    btn.style.borderColor = primaryColor;
                 } else {
                     btn.classList.remove('active');
-                    btn.style.borderColor = 'transparent';
                 }
             });
         }
@@ -1924,60 +1924,9 @@
         const originalSetTheme = window.setTheme;
         window.setTheme = function(themeName) {
             originalSetTheme(themeName);
-            // Small delay to allow CSS variables to update
-            setTimeout(updateActiveThemeUI, 50);
+            updateActiveThemeUI();
         }
     </script>
-    <style>
-        .themes-section {
-            padding-top: 8rem;
-            text-align: center;
-        }
-        .themes-section h1 {
-            font-size: 3rem;
-            color: var(--heading-color);
-            margin-bottom: 1rem;
-        }
-        .themes-section p {
-            margin-bottom: 3rem;
-            color: var(--text-color);
-        }
-        .themes-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1rem;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        .theme-btn {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 1.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            border: 2px solid transparent;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        .theme-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-        }
-        .theme-name {
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-        .theme-colors {
-            display: flex;
-            gap: 6px;
-        }
-        .color-dot {
-            width: 15px;
-            height: 15px;
-            border-radius: 50%;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-    </style>
+
 </body>
 </html>
