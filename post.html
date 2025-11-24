@@ -9,6 +9,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <!-- Marked.js for Markdown parsing -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Highlight.js for Syntax Highlighting (One Dark Theme) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <style>
         /* Markdown Content Styles */
         .markdown-content {
@@ -26,9 +29,42 @@
         .markdown-content p { margin-bottom: 1.5rem; color: var(--text-color); }
         .markdown-content ul, .markdown-content ol { margin-bottom: 1.5rem; padding-left: 2rem; }
         .markdown-content li { margin-bottom: 0.5rem; }
-        .markdown-content code { background-color: #0a192f; padding: 0.2rem 0.4rem; border-radius: 4px; font-family: monospace; color: var(--primary-color); }
-        .markdown-content pre { background-color: #0a192f; padding: 1.5rem; border-radius: 8px; overflow-x: auto; margin-bottom: 1.5rem; }
-        .markdown-content pre code { background-color: transparent; padding: 0; color: #e6f1ff; }
+        
+        /* Code Block Styling - One Dark */
+        .markdown-content code {
+            font-family: 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace;
+            font-size: 0.9rem;
+        }
+        
+        /* Inline code */
+        .markdown-content :not(pre) > code {
+            background-color: rgba(40, 44, 52, 0.1); /* Light background for inline */
+            color: #e06c75; /* One Dark Red/Pink for inline code */
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+        }
+
+        body[data-theme="light"] .markdown-content :not(pre) > code {
+            background-color: rgba(0,0,0,0.05);
+            color: #d70000;
+        }
+
+        /* Block code (handled by highlight.js but we add container styles) */
+        .markdown-content pre {
+            background-color: #282c34; /* One Dark Background */
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .markdown-content pre code {
+            background-color: transparent;
+            padding: 0;
+            color: #abb2bf; /* One Dark Foreground */
+        }
+
         .markdown-content blockquote { border-left: 4px solid var(--primary-color); padding-left: 1rem; font-style: italic; margin-bottom: 1.5rem; }
         .markdown-content img { max-width: 100%; border-radius: 8px; margin: 1.5rem 0; }
         
@@ -39,25 +75,25 @@
 <body>
     <header>
         <nav class="navbar">
-            <div class="logo">Portfolio.</div>
+            <a href="index.html" class="logo">Portfolio.</a>
             <ul class="nav-links">
                 <li><a href="index.html#home">Home</a></li>
                 <li><a href="index.html#about">About</a></li>
                 <li><a href="index.html#projects">Projects</a></li>
                 <li><a href="blog.html" class="active">Blog</a></li>
+                <li><a href="style.html">Style</a></li>
                 <li><a href="index.html#contact">Contact</a></li>
             </ul>
-            <div class="burger">
-                <div class="line1"></div>
-                <div class="line2"></div>
-                <div class="line3"></div>
+            <div class="theme-toggle">
+                <i class="fas fa-sun"></i>
             </div>
+            <a href="blog.html" class="mobile-blog-btn">Blog</a>
         </nav>
     </header>
 
     <section class="blog-post-section">
         <div class="container">
-            <a href="blog.html" class="btn" style="margin-bottom: 2rem;"><i class="fas fa-arrow-left"></i> Back to Blog</a>
+            <a href="blog.html" class="btn" style="margin-bottom: 2rem; margin-top: 2rem;"><i class="fas fa-arrow-left"></i> Back to Blog</a>
             
             <div id="loading">Loading post...</div>
             <div id="error-message">Post not found.</div>
@@ -94,6 +130,10 @@
                 .then(markdown => {
                     // Parse Markdown to HTML
                     contentDiv.innerHTML = marked.parse(markdown);
+                    
+                    // Apply Syntax Highlighting
+                    hljs.highlightAll();
+
                     loadingDiv.style.display = 'none';
                     contentDiv.style.display = 'block';
                     
