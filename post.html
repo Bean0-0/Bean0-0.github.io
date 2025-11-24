@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Post - My Personal Portfolio</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Marked.js for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        /* Markdown Content Styles */
+        .markdown-content {
+            background-color: var(--card-bg);
+            padding: 3rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+        .markdown-content h1, .markdown-content h2, .markdown-content h3 {
+            color: var(--heading-color);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        .markdown-content h1 { font-size: 2.5rem; border-bottom: 1px solid var(--text-color); padding-bottom: 0.5rem; }
+        .markdown-content p { margin-bottom: 1.5rem; color: var(--text-color); }
+        .markdown-content ul, .markdown-content ol { margin-bottom: 1.5rem; padding-left: 2rem; }
+        .markdown-content li { margin-bottom: 0.5rem; }
+        .markdown-content code { background-color: #0a192f; padding: 0.2rem 0.4rem; border-radius: 4px; font-family: monospace; color: var(--primary-color); }
+        .markdown-content pre { background-color: #0a192f; padding: 1.5rem; border-radius: 8px; overflow-x: auto; margin-bottom: 1.5rem; }
+        .markdown-content pre code { background-color: transparent; padding: 0; color: #e6f1ff; }
+        .markdown-content blockquote { border-left: 4px solid var(--primary-color); padding-left: 1rem; font-style: italic; margin-bottom: 1.5rem; }
+        .markdown-content img { max-width: 100%; border-radius: 8px; margin: 1.5rem 0; }
+        
+        #loading { text-align: center; font-size: 1.5rem; color: var(--primary-color); }
+        #error-message { text-align: center; color: #ff6b6b; display: none; }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">Portfolio.</div>
+            <ul class="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="blog.html" class="active">Blog</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="blog-post-section">
+        <div class="container">
+            <a href="blog.html" class="btn" style="margin-bottom: 2rem;"><i class="fas fa-arrow-left"></i> Back to Blog</a>
+            
+            <div id="loading">Loading post...</div>
+            <div id="error-message">Post not found.</div>
+            
+            <div id="content" class="markdown-content" style="display: none;">
+                <!-- Markdown content will be injected here -->
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Benjamin Nasse. All rights reserved.</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Function to get query parameter
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        const postId = getQueryParam('id');
+        const contentDiv = document.getElementById('content');
+        const loadingDiv = document.getElementById('loading');
+        const errorDiv = document.getElementById('error-message');
+
+        if (postId) {
+            fetch(`posts/${postId}.md`)
+                .then(response => {
+                    if (!response.ok) throw new Error('Post not found');
+                    return response.text();
+                })
+                .then(markdown => {
+                    // Parse Markdown to HTML
+                    contentDiv.innerHTML = marked.parse(markdown);
+                    loadingDiv.style.display = 'none';
+                    contentDiv.style.display = 'block';
+                    
+                    // Update page title based on first h1
+                    const firstH1 = contentDiv.querySelector('h1');
+                    if (firstH1) {
+                        document.title = `${firstH1.innerText} - My Blog`;
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                    loadingDiv.style.display = 'none';
+                    errorDiv.style.display = 'block';
+                    errorDiv.innerText = "Error loading post: " + error.message;
+                });
+        } else {
+            loadingDiv.style.display = 'none';
+            errorDiv.style.display = 'block';
+            errorDiv.innerText = "No post specified.";
+        }
+    </script>
+</body>
+</html>
