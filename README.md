@@ -1,40 +1,47 @@
-# bean0-0.github.io
+# Personal Portfolio Website
 
-This template should help get you started developing with Vue 3 in Vite.
+This is a modern, responsive personal portfolio website template designed for GitHub Pages.
 
-## Recommended IDE Setup
+## Features
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+- **Responsive Design:** Looks good on mobile, tablet, and desktop.
+- **Dark Mode Theme:** A developer-friendly dark color scheme.
+- **Smooth Scrolling:** Easy navigation between sections.
+- **Mobile Navigation:** Hamburger menu for smaller screens.
+- **Clean Code:** Organized HTML, CSS, and JavaScript.
 
-## Type Support for `.vue` Imports in TS
+## How to Use
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+1.  **Edit `index.html`:**
+    - Replace "Your Name" with your actual name.
+    - Update the "About Me" section with your bio.
+    - Add your skills in the "Skills" section.
+    - Update the "Projects" section with your own projects.
+    - Change the email address in the "Contact" section.
+    - Update social media links.
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+2.  **Customize Styles (`css/style.css`):**
+    - You can change the colors by modifying the CSS variables at the top of the file:
+      ```css
+      :root {
+          --primary-color: #64ffda; /* Change this to your favorite color */
+          /* ... other variables */
+      }
+      ```
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+3.  **Add Images:**
+    - You can add an `images` folder and reference your own images in the HTML.
 
-## Customize configuration
+## Deployment on GitHub Pages
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+1.  Push this code to your GitHub repository (which you are already in).
+2.  Go to your repository **Settings**.
+3.  Scroll down to the **Pages** section (or click "Pages" in the sidebar).
+4.  Under **Source**, select `main` branch and `/ (root)` folder.
+5.  Click **Save**.
+6.  Your site will be live at `https://Bean0-0.github.io/` (it might take a minute or two).
 
-## Project Setup
+## Credits
 
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
+- Icons by [FontAwesome](https://fontawesome.com/)
+- Fonts by [Google Fonts](https://fonts.google.com/)
